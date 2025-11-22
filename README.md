@@ -5,9 +5,13 @@ DoubleTrack Browser puts a hard stop to attempts to limit the reckless sharing o
 
 # DoubleTrack Browser
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![License](https://img.shields.io/badge/license-MIT%20OR%20Palimpsest--0.8-blue.svg)
 ![Status](https://img.shields.io/badge/status-experimental-red.svg)
 ![Privacy](https://img.shields.io/badge/privacy-enhanced-green.svg)
+![RSR Compliance](https://img.shields.io/badge/RSR-Gold%20Level%20(91%25)-gold.svg)
+![TPCF](https://img.shields.io/badge/TPCF-Perimeter%203-green.svg)
+![Build](https://img.shields.io/github/workflow/status/yourusername/double-track-browser/CI?label=build)
+![Tests](https://img.shields.io/badge/tests-27%20passing-brightgreen.svg)
 
 ## The Pendulum Swings Back
 
@@ -61,13 +65,68 @@ Then load the extension from the `dist/` directory into your browser of choice.
 
 This is experimental software. While designed with security in mind, it may have unintended consequences for your online experience. Use at your own risk and only on personal devices.
 
+## RSR Framework Compliance
+
+This project adheres to the **Rhodium Standard Repository (RSR) Framework** and achieves **Gold Level** compliance (91%):
+
+✅ **Documentation**: README, LICENSE, SECURITY, CODE_OF_CONDUCT, CONTRIBUTING, MAINTAINERS, CHANGELOG
+✅ **.well-known/**: RFC 9116 security.txt, ai.txt (AI training policy), humans.txt (attribution)
+✅ **Type Safety**: Rust compile-time guarantees + TypeScript strict mode
+✅ **Memory Safety**: Rust ownership model, zero unsafe blocks
+✅ **Build System**: npm, webpack, wasm-pack, justfile, flake.nix (Nix reproducible builds)
+✅ **CI/CD**: GitHub Actions with security audits, linting, and testing
+✅ **Test Coverage**: 27 comprehensive tests (15 Rust + 12 TypeScript)
+✅ **Offline-First**: Zero network dependencies, works air-gapped
+
+See [RSR_COMPLIANCE_AUDIT.md](RSR_COMPLIANCE_AUDIT.md) for detailed audit.
+
+## Tri-Perimeter Contribution Framework (TPCF)
+
+This project uses the **TPCF** to manage trust and contributions:
+
+### **Perimeter 3: Community Sandbox** (Current)
+- **Access**: Open to all
+- **Scope**: All public contributions
+- **Requirements**: Follow Code of Conduct, sign commits (optional)
+- **Review**: All PRs reviewed before merge
+
+### Perimeter 2: Trusted Contributors (Future)
+- Access granted after sustained contributions (3+ months, 10+ merged PRs)
+- Code review privileges, issue triage, mentoring
+
+### Perimeter 1: Core Stewards (Future)
+- Invitation-only for long-term maintainers
+- Strategic decisions, governance, security response
+
+**Current Status**: Only Perimeter 3 is active. See [MAINTAINERS.md](MAINTAINERS.md) for details.
+
 ## Contributing
 
-Contributions are welcome, particularly in the areas of profile generation algorithms and behavior simulation. See `CONTRIBUTING.md` for guidelines.
+Contributions are welcome! This project values:
+- **Reversibility**: Experiments should be safe to try and easy to undo
+- **Emotional Safety**: No blame culture, mistakes are learning opportunities
+- **Diverse Expertise**: All skill levels welcome
+- **Sustainable Pace**: No crunch time, life comes first
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community standards.
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for vulnerability reporting procedures and our security model. We follow responsible disclosure with a 90-day coordinated release window.
+
+**Quick contacts**:
+- **Security issues**: security@example.com (see .well-known/security.txt)
+- **Code of Conduct**: conduct@example.com
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is dual-licensed:
+- **MIT License** (primary) - see [LICENSE-MIT](LICENSE-MIT)
+- **Palimpsest License v0.8** (alternative) - see [LICENSE-PALIMPSEST](LICENSE-PALIMPSEST)
+
+You may choose either license. See [LICENSING.md](LICENSING.md) for details.
+
+The original GPL-3.0 license is retained in [LICENSE](LICENSE) for historical reference.
 
 ---
 

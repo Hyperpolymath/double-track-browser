@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoubleTrack - Analytics Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📊 Activity Analytics Dashboard</h1>
+      <p class="subtitle">Visualize your simulated browsing patterns</p>
+      <button id="back-btn" class="btn-back">← Back to Settings</button>
+    </header>
+
+    <div class="content">
+      <!-- Overview Cards -->
+      <section class="overview-grid">
+        <div class="card stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-content">
+            <div class="stat-value" id="total-activities">0</div>
+            <div class="stat-label">Total Activities</div>
+            <div class="stat-change positive" id="activity-change">+0% from last week</div>
+          </div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-content">
+            <div class="stat-value" id="daily-average">0</div>
+            <div class="stat-label">Daily Average</div>
+            <div class="stat-change" id="daily-trend">steady</div>
+          </div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-content">
+            <div class="stat-value" id="total-duration">0h</div>
+            <div class="stat-label">Total Duration</div>
+            <div class="stat-change" id="duration-avg">avg 2m per activity</div>
+          </div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-content">
+            <div class="stat-value" id="streak-days">0</div>
+            <div class="stat-label">Activity Streak</div>
+            <div class="stat-change" id="streak-label">days</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Activity Timeline -->
+      <section class="card">
+        <h2>Activity Timeline (Last 7 Days)</h2>
+        <div class="chart-container">
+          <canvas id="timeline-chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Activity Distribution -->
+      <section class="card-grid">
+        <div class="card">
+          <h2>Activity Types</h2>
+          <div class="chart-container">
+            <canvas id="type-chart"></canvas>
+          </div>
+          <div id="type-legend" class="legend"></div>
+        </div>
+
+        <div class="card">
+          <h2>Hourly Pattern</h2>
+          <div class="chart-container">
+            <canvas id="hourly-chart"></canvas>
+          </div>
+          <div class="info-text">Peak activity hours highlighted</div>
+        </div>
+      </section>
+
+      <!-- Interest Distribution -->
+      <section class="card">
+        <h2>Interest Categories</h2>
+        <div id="interest-bars" class="interest-bars"></div>
+      </section>
+
+      <!-- Activity Heatmap -->
+      <section class="card">
+        <h2>Weekly Activity Heatmap</h2>
+        <div class="heatmap-container">
+          <div class="heatmap-grid" id="heatmap-grid"></div>
+          <div class="heatmap-legend">
+            <span>Less</span>
+            <div class="legend-scale">
+              <div class="legend-box" style="background: #ebedf0;"></div>
+              <div class="legend-box" style="background: #c6e48b;"></div>
+              <div class="legend-box" style="background: #7bc96f;"></div>
+              <div class="legend-box" style="background: #239a3b;"></div>
+              <div class="legend-box" style="background: #196127;"></div>
+            </div>
+            <span>More</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Activities -->
+      <section class="card">
+        <h2>Recent Activities</h2>
+        <div id="recent-activities" class="activity-list"></div>
+      </section>
+
+      <!-- Profile Insights -->
+      <section class="card insights-card">
+        <h2>💡 Profile Insights</h2>
+        <div id="insights-content">
+          <p class="insight-item">
+            <span class="insight-icon">👤</span>
+            <span id="insight-profile"></span>
+          </p>
+          <p class="insight-item">
+            <span class="insight-icon">📈</span>
+            <span id="insight-activity"></span>
+          </p>
+          <p class="insight-item">
+            <span class="insight-icon">🎯</span>
+            <span id="insight-pattern"></span>
+          </p>
+          <p class="insight-item">
+            <span class="insight-icon">⚡</span>
+            <span id="insight-performance"></span>
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

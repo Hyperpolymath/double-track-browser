@@ -64,6 +64,10 @@ class OptionsController {
 
     // Activity actions
     document
+      .getElementById("view-dashboard-btn")
+      ?.addEventListener("click", () => this.handleViewDashboard());
+
+    document
       .getElementById("view-history-btn")
       ?.addEventListener("click", () => this.handleViewHistory());
 
@@ -228,6 +232,13 @@ class OptionsController {
     link.click();
 
     URL.revokeObjectURL(url);
+  }
+
+  private handleViewDashboard(): void {
+    // Open dashboard in a new tab
+    chrome.tabs.create({
+      url: chrome.runtime.getURL("dashboard.html"),
+    });
   }
 
   private async handleViewHistory(): Promise<void> {

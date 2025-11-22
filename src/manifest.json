@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "DoubleTrack Browser",
+  "version": "0.1.0",
+  "description": "Privacy through deliberate visibility - create fictional browsing patterns alongside your real activity",
+  "permissions": [
+    "storage",
+    "history",
+    "tabs",
+    "alarms",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.wasm", "wasm/*.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

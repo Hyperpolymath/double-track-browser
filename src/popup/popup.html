@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoubleTrack Browser</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>DoubleTrack Browser</h1>
+      <p class="tagline">Privacy through visibility</p>
+    </header>
+
+    <div id="status-section" class="section">
+      <div class="status-indicator">
+        <span id="status-dot" class="dot"></span>
+        <span id="status-text">Disabled</span>
+      </div>
+      <button id="toggle-btn" class="btn btn-primary">Enable</button>
+    </div>
+
+    <div id="profile-section" class="section">
+      <h2>Current Profile</h2>
+      <div id="profile-info">
+        <p id="no-profile" class="text-muted">No profile generated yet</p>
+        <div id="profile-details" style="display: none;">
+          <p><strong>Name:</strong> <span id="profile-name"></span></p>
+          <p><strong>Age:</strong> <span id="profile-age"></span></p>
+          <p><strong>Occupation:</strong> <span id="profile-occupation"></span></p>
+          <p><strong>Interests:</strong> <span id="profile-interests"></span></p>
+          <p><strong>Activity Level:</strong> <span id="profile-activity-level"></span></p>
+        </div>
+      </div>
+      <button id="generate-profile-btn" class="btn btn-secondary">Generate New Profile</button>
+    </div>
+
+    <div id="stats-section" class="section">
+      <h2>Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value" id="total-activities">0</div>
+          <div class="stat-label">Total Activities</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="today-activities">0</div>
+          <div class="stat-label">Today</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="profile-age">0</div>
+          <div class="stat-label">Profile Age (days)</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="controls-section" class="section">
+      <h2>Quick Settings</h2>
+      <div class="control-group">
+        <label for="noise-level">Noise Level: <span id="noise-value">50%</span></label>
+        <input type="range" id="noise-level" min="0" max="100" value="50">
+      </div>
+      <div class="control-group">
+        <label>
+          <input type="checkbox" id="respect-schedule">
+          Respect Activity Schedule
+        </label>
+      </div>
+    </div>
+
+    <footer>
+      <button id="options-btn" class="btn btn-link">Advanced Settings</button>
+      <button id="clear-history-btn" class="btn btn-link text-danger">Clear History</button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

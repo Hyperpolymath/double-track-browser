@@ -1,0 +1,12 @@
+This directory needs icon files in the following sizes:
+- icon16.png
+- icon32.png
+- icon48.png
+- icon128.png
+
+Use the icon.svg as a template and convert to PNG using:
+- Online converter (e.g., cloudconvert.com)
+- ImageMagick: convert -background none -resize 128x128 icon.svg icon128.png
+- Inkscape: inkscape -w 128 -h 128 icon.svg -o icon128.png
+
+Or design proper icons in Figma/Illustrator following the brand guidelines.

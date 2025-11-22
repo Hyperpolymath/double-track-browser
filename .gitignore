@@ -9,3 +9,32 @@
 
 # Undo-tree save-files
 *.~undo-tree
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build output
+dist/
+*.log
+
+# Rust/WASM
+rust_core/target/
+rust_core/pkg/
+**/*.rs.bk
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoubleTrack Browser - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>DoubleTrack Browser Settings</h1>
+      <p class="subtitle">Configure your privacy protection preferences</p>
+    </header>
+
+    <div class="content">
+      <section class="card">
+        <h2>General Settings</h2>
+
+        <div class="setting-group">
+          <label class="setting-label">
+            <input type="checkbox" id="enabled">
+            <span class="label-text">
+              <strong>Enable DoubleTrack</strong>
+              <small>Start generating fictional browsing activity</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="setting-group">
+          <label for="privacy-mode">Privacy Mode</label>
+          <select id="privacy-mode">
+            <option value="Full">Full - Maximum noise generation</option>
+            <option value="Moderate">Moderate - Balanced approach</option>
+            <option value="Minimal">Minimal - Light noise only</option>
+            <option value="Disabled">Disabled - No activity</option>
+          </select>
+          <small class="help-text">Controls the intensity of simulated activity</small>
+        </div>
+
+        <div class="setting-group">
+          <label for="noise-level">Activity Noise Level: <span id="noise-value">50%</span></label>
+          <input type="range" id="noise-level" min="0" max="100" value="50">
+          <small class="help-text">Higher values create more activity</small>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Schedule Settings</h2>
+
+        <div class="setting-group">
+          <label class="setting-label">
+            <input type="checkbox" id="respect-schedule">
+            <span class="label-text">
+              <strong>Follow Activity Schedule</strong>
+              <small>Only generate activity during realistic hours for your profile</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="info-box">
+          <p><strong>How schedules work:</strong> Your profile has a schedule based on occupation and lifestyle. When enabled, activities only occur during periods when someone like your profile would typically be online.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Current Profile</h2>
+
+        <div id="profile-display">
+          <p id="no-profile-message" class="text-muted">No profile generated yet</p>
+          <div id="profile-details" style="display: none;">
+            <div class="profile-grid">
+              <div class="profile-item">
+                <label>Name</label>
+                <span id="profile-name"></span>
+              </div>
+              <div class="profile-item">
+                <label>Age</label>
+                <span id="profile-age"></span>
+              </div>
+              <div class="profile-item">
+                <label>Gender</label>
+                <span id="profile-gender"></span>
+              </div>
+              <div class="profile-item">
+                <label>Location Type</label>
+                <span id="profile-location"></span>
+              </div>
+              <div class="profile-item">
+                <label>Occupation</label>
+                <span id="profile-occupation"></span>
+              </div>
+              <div class="profile-item">
+                <label>Education</label>
+                <span id="profile-education"></span>
+              </div>
+              <div class="profile-item full-width">
+                <label>Interests</label>
+                <span id="profile-interests"></span>
+              </div>
+              <div class="profile-item">
+                <label>Browsing Style</label>
+                <span id="profile-style"></span>
+              </div>
+              <div class="profile-item">
+                <label>Activity Level</label>
+                <span id="profile-activity"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button id="generate-profile-btn" class="btn btn-primary">Generate New Profile</button>
+          <button id="export-profile-btn" class="btn btn-secondary" disabled>Export Profile</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Activity Statistics</h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="total-activities">0</div>
+            <div class="stat-label">Total Activities</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="today-activities">0</div>
+            <div class="stat-label">Today's Activities</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="profile-age-days">0</div>
+            <div class="stat-label">Profile Age (Days)</div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button id="view-history-btn" class="btn btn-secondary">View Activity Log</button>
+          <button id="clear-history-btn" class="btn btn-danger">Clear All History</button>
+        </div>
+      </section>
+
+      <section class="card warning-card">
+        <h2>⚠️ Important Information</h2>
+
+        <div class="warning-content">
+          <p><strong>Privacy & Security:</strong> This extension generates fictional browsing activity to obscure your real patterns. All activity is kept separate from your actual browsing data.</p>
+
+          <p><strong>Experimental Software:</strong> This is experimental software exploring unconventional privacy approaches. Use at your own risk.</p>
+
+          <p><strong>Resource Usage:</strong> Background activity simulation uses system resources. Adjust noise levels if you experience performance issues.</p>
+
+          <p><strong>Data Storage:</strong> All profile and activity data is stored locally in your browser. No data is transmitted to external servers.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <p>DoubleTrack Browser v0.1.0 | <a href="https://github.com" target="_blank">GitHub</a> | <a href="#">Documentation</a></p>
+        <p class="text-muted">Privacy through deliberate visibility</p>
+      </div>
+    </footer>
+  </div>
+
+  <div id="activity-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Activity Log</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="activity-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

@@ -6,7 +6,8 @@ module.exports = {
     background: './src/background/index.ts',
     popup: './src/popup/index.ts',
     options: './src/options/index.ts',
-    content: './src/content/index.ts'
+    content: './src/content/index.ts',
+    dashboard: './src/dashboard/index.ts'
   },
   module: {
     rules: [
@@ -33,6 +34,8 @@ module.exports = {
         { from: 'src/popup/popup.css', to: 'popup.css' },
         { from: 'src/options/options.html', to: 'options.html' },
         { from: 'src/options/options.css', to: 'options.css' },
+        { from: 'src/dashboard/dashboard.html', to: 'dashboard.html' },
+        { from: 'src/dashboard/dashboard.css', to: 'dashboard.css' },
         { from: 'rust_core/pkg/*.wasm', to: '[name][ext]', noErrorOnMissing: true },
         { from: 'rust_core/pkg/*.js', to: 'wasm/[name][ext]', noErrorOnMissing: true },
         { from: 'icons', to: 'icons', noErrorOnMissing: true }

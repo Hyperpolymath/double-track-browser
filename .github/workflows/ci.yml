@@ -1,0 +1,312 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop, claude/* ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run weekly security audits (Sundays at 00:00 UTC)
+    - cron: '0 0 * * 0'
+
+env:
+  RUST_BACKTRACE: 1
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # Rust Tests
+  rust-test:
+    name: Rust Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        rust: [stable]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ matrix.rust }}
+          components: rustfmt, clippy
+          targets: wasm32-unknown-unknown
+
+      - name: Cache Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust_core/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Check Formatting
+        working-directory: rust_core
+        run: cargo fmt -- --check
+
+      - name: Clippy
+        working-directory: rust_core
+        run: cargo clippy -- -D warnings
+
+      - name: Run Tests
+        working-directory: rust_core
+        run: cargo test --release
+
+      - name: Run Tests (Debug)
+        working-directory: rust_core
+        run: cargo test
+
+  # TypeScript Tests
+  typescript-test:
+    name: TypeScript Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Type Check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Upload Coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 20
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+          flags: typescript
+          name: typescript-coverage
+
+  # Build Extension
+  build:
+    name: Build Extension
+    runs-on: ubuntu-latest
+    needs: [rust-test, typescript-test]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Rust Core
+        working-directory: rust_core
+        run: wasm-pack build --target web --release
+
+      - name: Build Extension
+        run: npm run build
+
+      - name: Check Build Output
+        run: |
+          ls -lah dist/
+          test -f dist/manifest.json
+          test -f dist/background.js
+          test -f dist/popup.html
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-build-${{ github.sha }}
+          path: dist/
+          retention-days: 30
+
+  # Security Audit
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo Audit
+        working-directory: rust_core
+        run: |
+          cargo install cargo-audit
+          cargo audit
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: NPM Audit
+        run: |
+          npm audit --audit-level=moderate || true
+          npm audit --production --audit-level=high
+
+  # RSR Compliance Check
+  rsr-compliance:
+    name: RSR Compliance Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Documentation
+        run: |
+          echo "Checking required files..."
+          test -f README.md || (echo "❌ README.md missing" && exit 1)
+          test -f LICENSE || (echo "❌ LICENSE missing" && exit 1)
+          test -f SECURITY.md || (echo "❌ SECURITY.md missing" && exit 1)
+          test -f CODE_OF_CONDUCT.md || (echo "❌ CODE_OF_CONDUCT.md missing" && exit 1)
+          test -f CONTRIBUTING.md || (echo "❌ CONTRIBUTING.md missing" && exit 1)
+          test -f MAINTAINERS.md || (echo "❌ MAINTAINERS.md missing" && exit 1)
+          test -f CHANGELOG.md || (echo "❌ CHANGELOG.md missing" && exit 1)
+          echo "✅ Core documentation present"
+
+      - name: Check .well-known
+        run: |
+          echo "Checking .well-known directory..."
+          test -f .well-known/security.txt || (echo "❌ security.txt missing" && exit 1)
+          test -f .well-known/ai.txt || (echo "❌ ai.txt missing" && exit 1)
+          test -f .well-known/humans.txt || (echo "❌ humans.txt missing" && exit 1)
+          echo "✅ .well-known files present"
+
+      - name: Check Build System
+        run: |
+          echo "Checking build system..."
+          test -f package.json || (echo "❌ package.json missing" && exit 1)
+          test -f justfile || (echo "❌ justfile missing" && exit 1)
+          test -f flake.nix || (echo "❌ flake.nix missing" && exit 1)
+          echo "✅ Build system files present"
+
+      - name: Validate security.txt (RFC 9116)
+        run: |
+          echo "Validating security.txt format..."
+          grep -q "Contact:" .well-known/security.txt || (echo "❌ Missing Contact field" && exit 1)
+          grep -q "Expires:" .well-known/security.txt || (echo "❌ Missing Expires field" && exit 1)
+          echo "✅ security.txt format valid"
+
+      - name: Generate Compliance Report
+        run: |
+          echo "# RSR Compliance Report" > compliance-report.md
+          echo "" >> compliance-report.md
+          echo "**Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> compliance-report.md
+          echo "**Commit**: ${{ github.sha }}" >> compliance-report.md
+          echo "" >> compliance-report.md
+          echo "## Results" >> compliance-report.md
+          echo "✅ All RSR requirements met" >> compliance-report.md
+
+      - name: Upload Compliance Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: rsr-compliance-report
+          path: compliance-report.md
+
+  # Package Release (only on tags)
+  release:
+    name: Package Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build, security, rsr-compliance]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Release
+        run: |
+          cd rust_core && wasm-pack build --target web --release && cd ..
+          NODE_ENV=production npm run build
+
+      - name: Package Extension
+        run: |
+          cd dist
+          zip -r ../doubletrack-browser-${{ github.ref_name }}.zip *
+          cd ..
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            doubletrack-browser-${{ github.ref_name }}.zip
+          draft: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Code Coverage
+  coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    needs: [rust-test, typescript-test]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+
+      - name: Generate Rust Coverage
+        working-directory: rust_core
+        run: cargo tarpaulin --out Xml --output-dir ../coverage
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate TypeScript Coverage
+        run: npm test -- --coverage
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/cobertura-coverage.xml,./coverage/lcov.info
+          flags: unittests
+          name: doubletrack-coverage

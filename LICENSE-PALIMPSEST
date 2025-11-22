@@ -1,0 +1,132 @@
+Palimpsest License v0.8
+
+Copyright (c) 2025 DoubleTrack Browser Contributors
+
+## Preamble
+
+The Palimpsest License recognizes that software development is a human activity
+involving emotional labor, cognitive load, and the need for psychological safety.
+This license balances open collaboration with the well-being of contributors.
+
+## Philosophy
+
+Software, like a palimpsest, carries layers of meaning - technical, social, and
+emotional. This license acknowledges all three dimensions.
+
+## Terms and Conditions
+
+### 1. Permissions
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to:
+
+a) Use the Software for any purpose
+b) Study and modify the Software
+c) Distribute copies of the Software
+d) Distribute modified versions of the Software
+
+### 2. Conditions
+
+The above permissions are granted subject to the following conditions:
+
+a) **Attribution**: You must preserve copyright notices and attribution.
+
+b) **Source Availability**: If you distribute the Software, you must make the
+   source code available under this same license or a compatible one.
+
+c) **Reversibility**: You must maintain the ability for users to revert changes.
+   This includes:
+   - Version control or change tracking
+   - Clear documentation of modifications
+   - Reasonable mechanisms for users to return to previous states
+
+d) **Emotional Safety**: Contributors and users have the right to:
+   - Step away from the project without guilt or pressure
+   - Say "no" to requests or features
+   - Make mistakes and learn from them
+   - Have their emotional well-being respected
+
+e) **No Harassment**: You may not use this Software to harass, abuse, or cause
+   emotional harm to others.
+
+f) **Acknowledgment of Labor**: Recognize that maintainers and contributors:
+   - Are not obligated to provide support
+   - May have limited time and energy
+   - Deserve respect and kindness
+   - Can set boundaries
+
+### 3. Derivatives
+
+Modified versions must:
+- Be marked as changed from the original
+- Retain this license or use a compatible license
+- Not imply endorsement by the original authors
+- Respect the reversibility principle
+
+### 4. Warranty Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT, EMOTIONAL WELL-BEING,
+OR SUITABILITY FOR ANY PARTICULAR USE.
+
+### 5. Limitation of Liability
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+This includes, but is not limited to, emotional or psychological harm,
+stress, burnout, or any other non-material damages.
+
+### 6. Interpretation
+
+a) **Reversibility** means the ability to undo changes or return to previous
+   states. It does not require time-travel or perfect restoration, but rather
+   reasonable mechanisms for users to control their experience.
+
+b) **Emotional Safety** recognizes that software development involves humans
+   with feelings, not just code. It prioritizes kindness and respect.
+
+c) **Compatible Licenses** include: MIT, Apache 2.0, BSD variants, and other
+   open source licenses that respect these principles.
+
+### 7. Termination
+
+Your rights under this license terminate if you:
+- Violate the emotional safety provisions
+- Use the Software to cause harm
+- Fail to respect contributor boundaries
+
+### 8. Governance
+
+This license is maintained as part of the Rhodium Standard Repository (RSR)
+Framework and may be updated from time to time. You may choose to follow the
+terms of this version (v0.8) or any later version.
+
+## Human-Friendly Summary
+
+You can use this software for anything, modify it, and share it. Just:
+- Give credit where it's due
+- Share your changes
+- Let people undo their mistakes
+- Be kind to contributors
+- Respect boundaries
+
+## Additional Resources
+
+- Full RSR Framework: [URL]
+- Palimpsest License Explained: [URL]
+- FAQ: [URL]
+
+## Version History
+
+- v0.8 (2025): Current version
+  - Added reversibility principle
+  - Enhanced emotional safety provisions
+  - Clarified derivative works terms
+
+---
+
+SPDX-License-Identifier: Palimpsest-0.8
